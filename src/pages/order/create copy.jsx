@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const OrderInvoice = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -17,15 +15,19 @@ const OrderInvoice = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch customers
         const customerResponse = await axios.get(
           "http://localhost/Laravel/Laravel_POS/public/api/find_customer"
         );
+
         setCustomers(customerResponse.data.customer);
         setLastOrder(customerResponse.data.order[0]);
 
+        // Fetch products
         const productResponse = await axios.get(
           "http://localhost/Laravel/Laravel_POS/public/api/find_product"
         );
+
         setProducts(productResponse.data.product);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -92,6 +94,12 @@ const OrderInvoice = () => {
     return getTotal() + getTax();
   };
 
+
+
+
+
+
+
   const handleProcessOrder = async () => {
     if (!selectedCustomer) {
       alert("Please select a customer.");
@@ -121,6 +129,8 @@ const OrderInvoice = () => {
         "http://localhost/Laravel/Laravel_POS/public/api/orders/store_react",
         orderData
       );
+      console.log("Order data being sent:", orderData);
+
 
       console.log("Order processed successfully:", response.data);
       alert("Order processed successfully!");
@@ -128,9 +138,6 @@ const OrderInvoice = () => {
       // Clear the cart and reset the selected customer
       setCart([]);
       setSelectedCustomer(null);
-
-      // Redirect to /order after successful order processing
-      navigate("/order");
     } catch (error) {
       console.error("Error processing order:", error);
       alert("Failed to process order. Please try again.");
