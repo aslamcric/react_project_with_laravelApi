@@ -113,7 +113,7 @@ const Sidebar = () => {
                             <div className="collapse" id="return">
                                 <ul className="side-nav-second-level">
                                     <li>
-                                        <NavLink to="/">Purchase</NavLink>
+                                        <NavLink to="/purchase">Purchase</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to="/">Purchase Details</NavLink>
@@ -137,7 +137,7 @@ const Sidebar = () => {
                             <div className="collapse" id="borrowdetails">
                                 <ul className="side-nav-second-level">
                                     <li>
-                                        <NavLink to="/">Customers</NavLink>
+                                        <NavLink to="/customer">Customers</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to="/">Suppliers</NavLink>
