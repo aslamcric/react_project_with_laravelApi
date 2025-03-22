@@ -7,7 +7,6 @@ const ManagePurchases = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const purchasesPerPage = 5;
 
-
   useEffect(() => {
     fetchPurchases();
   }, []);
@@ -15,17 +14,15 @@ const ManagePurchases = () => {
   const fetchPurchases = async () => {
     try {
       const response = await axios.get(
-        "http://localhost/Laravel/Laravel_POS/public/api/purchases"
+        "http://localhost/Laravel/Laravel_POS/public/api/purchase"
       );
-      console.log("Fetched purchases:", response.data); // Debugging line
-      setPurchases(response.data.purchases || []); // Ensure default value if undefined
-      console.log(response.data.purchases);
+      // Ensure the correct extraction of the 'purchases' array from the response
+      setPurchases(response.data.purchase || []);
+      console.log("Fetched purchases:", response.data.purchase); // Debugging line
     } catch (error) {
       console.error("Error fetching purchases:", error);
     }
   };
-
-
 
   const handleDelete = async (purchaseId) => {
     if (window.confirm("Are you sure you want to delete this purchase?")) {
@@ -41,7 +38,6 @@ const ManagePurchases = () => {
     }
   };
 
-
   // Pagination Logic
   const indexOfLastPurchase = currentPage * purchasesPerPage;
   const indexOfFirstPurchase = indexOfLastPurchase - purchasesPerPage;
@@ -53,12 +49,11 @@ const ManagePurchases = () => {
     setCurrentPage(pageNumber);
   };
 
-
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Manage Purchases</h2>
-        <Link to="/" className="btn btn-primary">
+        <Link to="/createPurchase" className="btn btn-primary">
           New Purchase
         </Link>
       </div>
@@ -74,7 +69,7 @@ const ManagePurchases = () => {
             <th>Discount</th>
             <th>Vat</th>
             <th>Date</th>
-            <th>Shipping Address</th>
+            {/* <th>Shipping Address</th> */}
             <th>Action</th>
           </tr>
         </thead>
@@ -83,13 +78,13 @@ const ManagePurchases = () => {
             <tr key={purchase.id}>
               <td>{purchase.id}</td>
               <td>{purchase.supplier.name || "N/A"}</td>
-              <td>{purchase.payment_status || "N/A"}</td>
+              <td>{purchase.payment_status.name || "N/A"}</td>
               <td>{purchase.order_total}</td>
               <td>{purchase.paid_amount}</td>
               <td>{purchase.discount}</td>
               <td>{purchase.vat}</td>
               <td>{purchase.date}</td>
-              <td>{purchase.shipping_address}</td>
+              {/* <td>{purchase.shipping_address || "N/A"}</td> */}
               <td>
                 <Link className="btn btn-primary me-2" to={`/purchases/${purchase.id}`}>
                   View

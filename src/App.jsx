@@ -22,6 +22,9 @@ import Invoice from './pages/order/invoice'
 import CustomerList from './pages/customer'
 import CreateCustomer from './pages/customer/create'
 import ManagePurchase from './pages/purchase/ManagePurchase'
+import ManageStock from './pages/stock/ManageStock'
+import ManageProduct from './pages/product/ManageProduct'
+import ManageSupplier from './pages/supplier/ManageSupplier'
 
 
 
@@ -56,6 +59,12 @@ const App = () => {
             <Route path='/customers/create' element={<CreateCustomer />} />
 
             <Route path='/purchase' element={<ManagePurchase/>} />
+
+            <Route path='/stock' element={<ManageStock/>} />
+
+            <Route path='/product' element={<ManageProduct/>} />
+
+            <Route path='/supplier' element={<ManageSupplier/>} />
 
             
 

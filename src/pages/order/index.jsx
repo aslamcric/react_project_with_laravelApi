@@ -2,48 +2,45 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const ManagePurchases = () => {
-  const [purchases, setPurchases] = useState([]);
+const ManageOrders = () => {
+  const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const purchasesPerPage = 5;
+  const ordersPerPage = 5; 
 
   useEffect(() => {
-    fetchPurchases();
+    fetchOrders();
   }, []);
 
-  const fetchPurchases = async () => {
+  const fetchOrders = async () => {
     try {
       const response = await axios.get(
-        "http://localhost/Laravel/Laravel_POS/public/api/purchases"
+        "http://localhost/Laravel/Laravel_POS/public/api/orders"
       );
-      // Ensure the correct extraction of the 'purchases' array from the response
-      setPurchases(response.data.purchases || []);
-      console.log("Fetched purchases:", response.data.purchases); // Debugging line
+      setOrders(response.data.orders);
+      console.log(response.data.orders);
+      
     } catch (error) {
-      console.error("Error fetching purchases:", error);
+      console.error("Error fetching orders:", error);
     }
   };
 
-  const handleDelete = async (purchaseId) => {
-    if (window.confirm("Are you sure you want to delete this purchase?")) {
+  const handleDelete = async (orderId) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
       try {
-        const response = await axios.delete(
-          `http://localhost/Laravel/Laravel_POS/public/api/purchases/${purchaseId}`
-        );
-        console.log("Delete response:", response); // Debugging line
-        setPurchases(purchases.filter((purchase) => purchase.id !== purchaseId));
+        await axios.delete(`/api/orders/${orderId}`);
+        setOrders(orders.filter((order) => order.id !== orderId));
       } catch (error) {
-        console.error("Error deleting purchase:", error);
+        console.error("Error deleting order:", error);
       }
     }
   };
 
   // Pagination Logic
-  const indexOfLastPurchase = currentPage * purchasesPerPage;
-  const indexOfFirstPurchase = indexOfLastPurchase - purchasesPerPage;
-  const currentPurchases = purchases.slice(indexOfFirstPurchase, indexOfLastPurchase);
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
 
-  const totalPages = Math.ceil(purchases.length / purchasesPerPage);
+  const totalPages = Math.ceil(orders.length / ordersPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -52,9 +49,9 @@ const ManagePurchases = () => {
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Manage Purchases</h2>
-        <Link to="/createPurchase" className="btn btn-primary">
-          New Purchase
+        <h2>Manage Orders</h2>
+        <Link to="/createOrder" className="btn btn-primary">
+          New Order
         </Link>
       </div>
 
@@ -62,37 +59,35 @@ const ManagePurchases = () => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Supplier</th>
-            <th>Payment Status</th>
+            <th>Customer Name</th>
             <th>Order Total</th>
-            <th>Paid Amount</th>
             <th>Discount</th>
-            <th>Vat</th>
-            <th>Date</th>
-            <th>Shipping Address</th>
+            <th>Paid Amount</th>
+            <th>Status</th>
+            <th>Order Date</th>
+            <th>Delivery Date</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {currentPurchases.map((purchase) => (
-            <tr key={purchase.id}>
-              <td>{purchase.id}</td>
-              <td>{purchase.supplier ? purchase.supplier.name : "N/A"}</td>
-              <td>{purchase.payment_status || "N/A"}</td>
-              <td>{purchase.order_total}</td>
-              <td>{purchase.paid_amount}</td>
-              <td>{purchase.discount}</td>
-              <td>{purchase.vat}</td>
-              <td>{purchase.date}</td>
-              <td>{purchase.shipping_address || "N/A"}</td>
+          {currentOrders.map((order) => (
+            <tr key={order.id}>
+              <td>{order.id}</td>
+              <td>{order.customers.name}</td>
+              <td>{order.order_total}</td>
+              <td>{order.discount}</td>
+              <td>{order.paid_amount}</td>
+              <td>{order.orter_status.name || "N/A"}</td>
+              <td>{order.order_date}</td>
+              <td>{order.delivery_date}</td>
               <td>
-                <Link className="btn btn-primary me-2" to={`/purchases/${purchase.id}`}>
+                <Link className="btn btn-primary me-2" to={`/orders/${order.id}`}>
                   View
                 </Link>
-                <Link className="btn btn-success me-2" to={`/purchases/edit/${purchase.id}`}>
+                <Link className="btn btn-success me-2" to={`/orders/edit/${order.id}`}>
                   Edit
                 </Link>
-                <button className="btn btn-danger" onClick={() => handleDelete(purchase.id)}>
+                <button className="btn btn-danger" onClick={() => handleDelete(order.id)}>
                   Delete
                 </button>
               </td>
@@ -127,4 +122,4 @@ const ManagePurchases = () => {
   );
 };
 
-export default ManagePurchases;
+export default ManageOrders;

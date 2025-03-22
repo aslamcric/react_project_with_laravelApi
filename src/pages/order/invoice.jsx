@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const Invoice = () => {
   const [order, setOrder] = useState(null);
@@ -6,17 +8,16 @@ const Invoice = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { id } = useParams(); 
+  console.log(id);
+
   // Fetch data from API
   useEffect(() => {
-    fetch("http://localhost/Laravel/Laravel_POS/public/api/orders")
+    axios.get(`http://localhost/Laravel/Laravel_POS/public/api/orders/${id}`)
       .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch order data");
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data); // Debugging API response
-        setOrder(data.order);
-        setOrderDetails(data.orderDetails || []);
+        console.log(response.data); // Debugging API response
+        setOrder(response.data.order[0]);
+        setOrderDetails(response.data.order[0]?.order_details || []); // Ensure correct access
         setLoading(false);
       })
       .catch((err) => {
@@ -24,7 +25,7 @@ const Invoice = () => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, [id]); // Added `id` to dependency array
 
   // Function to calculate totals
   const calculateTotal = () => {
@@ -42,35 +43,6 @@ const Invoice = () => {
   };
 
   const { total, totalDiscount, tax, grandTotal } = calculateTotal();
-
-  // Add a new product dynamically
-  const addProduct = () => {
-    setOrderDetails([
-      ...orderDetails,
-      { id: orderDetails.length + 1, products: { name: "" }, qty: 1, price: 0, discount: 0 },
-    ]);
-  };
-
-  // Update product details
-  const updateProduct = (index, field, value) => {
-    const updatedOrderDetails = [...orderDetails];
-
-    if (field === "products") {
-      updatedOrderDetails[index] = {
-        ...updatedOrderDetails[index],
-        products: { ...updatedOrderDetails[index].products, name: value },
-      };
-    } else {
-      updatedOrderDetails[index] = { ...updatedOrderDetails[index], [field]: value };
-    }
-
-    setOrderDetails(updatedOrderDetails);
-  };
-
-  // Remove a product
-  const removeProduct = (index) => {
-    setOrderDetails(orderDetails.filter((_, i) => i !== index));
-  };
 
   // Print Invoice
   const printInvoice = () => {
@@ -106,7 +78,6 @@ const Invoice = () => {
                 <h6 className="fw-bold text-primary">Invoice To:</h6>
                 <ul className="list-unstyled">
                   <li>Customer Name: {order?.customers?.name || "N/A"}</li>
-                  {/* <li>Customer Name: {order.customers.name}</li> */}
                   <li>Address: {order?.customers?.address || "N/A"}</li>
                   <li>Email: {order?.customers?.email || "N/A"}</li>
                 </ul>
@@ -131,12 +102,13 @@ const Invoice = () => {
                     return (
                       <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{item.products?.name || "N/A"}</td>
+                        <td>{item.product_id || "N/A"}</td>
                         <td>{item.qty}</td>
                         <td>{item.price}</td>
                         <td>{item.discount}</td>
                         <td>{subtotal.toFixed(2)}</td>
                       </tr>
+                      
                     );
                   })}
                 </tbody>
