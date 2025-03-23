@@ -14,7 +14,7 @@ const ManageOrders = () => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(
-        "http://localhost/Laravel/Laravel_POS/public/api/orders"
+        "https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/orders"
       );
       setOrders(response.data.orders);
       console.log(response.data.orders);

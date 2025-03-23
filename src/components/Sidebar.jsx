@@ -55,12 +55,12 @@ const Sidebar = () => {
                                     <li>
                                         <NavLink to="/product">View All Product</NavLink>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <NavLink to="/">Create Product</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to="/">Category</NavLink>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </li>
@@ -95,9 +95,9 @@ const Sidebar = () => {
                                     <li>
                                         <NavLink to="/order">Order</NavLink>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <NavLink to="/">Order Details</NavLink>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </li>
@@ -115,12 +115,12 @@ const Sidebar = () => {
                                     <li>
                                         <NavLink to="/purchase">Purchase</NavLink>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <NavLink to="/">Purchase Details</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to="/">Purchase Return</NavLink>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </li>
@@ -156,7 +156,7 @@ const Sidebar = () => {
                             </a>
                             <div className="collapse" id="sidebarCharts">
                                 <ul className="side-nav-second-level">
-                                    <li>
+                                    {/* <li>
                                         <NavLink to="/">Orders Report</NavLink>
                                     </li>
                                     <li>
@@ -164,7 +164,7 @@ const Sidebar = () => {
                                     </li>
                                     <li>
                                         <NavLink to="/">Stock Report</NavLink>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </li>

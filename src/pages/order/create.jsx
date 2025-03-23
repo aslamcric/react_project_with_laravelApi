@@ -18,13 +18,13 @@ const OrderInvoice = () => {
     const fetchData = async () => {
       try {
         const customerResponse = await axios.get(
-          "http://localhost/Laravel/Laravel_POS/public/api/find_customer"
+          "https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/find_customer"
         );
         setCustomers(customerResponse.data.customer);
         setLastOrder(customerResponse.data.order[0]);
 
         const productResponse = await axios.get(
-          "http://localhost/Laravel/Laravel_POS/public/api/find_product"
+          "https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/find_product"
         );
         setProducts(productResponse.data.product);
       } catch (error) {
@@ -118,7 +118,7 @@ const OrderInvoice = () => {
       };
 
       const response = await axios.post(
-        "http://localhost/Laravel/Laravel_POS/public/api/orders/store_react",
+        "https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/orders/store_react",
         orderData
       );
 

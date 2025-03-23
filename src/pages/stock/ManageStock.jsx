@@ -4,7 +4,7 @@ import axios from "axios";
 const ManageStock = () => {
   const [stocks, setStocks] = useState([]);
 
-  const baseurl = "http://localhost/Laravel/Laravel_POS/public";
+  const baseurl = "https://devaslam.xyz/Laravel_POS_for_ReactApi/public";
 
   const fetchStocks = () => {
     axios

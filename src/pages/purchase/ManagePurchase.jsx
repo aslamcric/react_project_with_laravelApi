@@ -14,7 +14,7 @@ const ManagePurchases = () => {
   const fetchPurchases = async () => {
     try {
       const response = await axios.get(
-        "http://localhost/Laravel/Laravel_POS/public/api/purchase"
+        "https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/purchase"
       );
       // Ensure the correct extraction of the 'purchases' array from the response
       setPurchases(response.data.purchase || []);
@@ -28,7 +28,7 @@ const ManagePurchases = () => {
     if (window.confirm("Are you sure you want to delete this purchase?")) {
       try {
         const response = await axios.delete(
-          `http://localhost/Laravel/Laravel_POS/public/api/purchases/${purchaseId}`
+          `https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/purchases/${purchaseId}`
         );
         console.log("Delete response:", response); // Debugging line
         setPurchases(purchases.filter((purchase) => purchase.id !== purchaseId));

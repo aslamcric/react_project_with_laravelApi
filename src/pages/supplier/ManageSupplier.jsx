@@ -5,7 +5,7 @@ const ManageSupplier = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const baseurl = "http://localhost/Laravel/Laravel_POS/public";
+  const baseurl = "https://devaslam.xyz/Laravel_POS_for_ReactApi/public";
 
   useEffect(() => {
     fetchSuppliers();

@@ -13,7 +13,7 @@ const Invoice = () => {
 
   // Fetch data from API
   useEffect(() => {
-    axios.get(`http://localhost/Laravel/Laravel_POS/public/api/orders/${id}`)
+    axios.get(`https://devaslam.xyz/Laravel_POS_for_ReactApi/public/api/orders/${id}`)
       .then((response) => {
         console.log(response.data); // Debugging API response
         setOrder(response.data.order[0]);
